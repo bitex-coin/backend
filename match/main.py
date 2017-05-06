@@ -5,9 +5,7 @@ import ConfigParser
 import argparse
 from appdirs import site_config_dir
 
-ROOT_PATH = os.path.abspath( os.path.join(os.path.dirname(__file__), "../../"))
-sys.path.insert( 0, os.path.join(ROOT_PATH, 'libs'))
-sys.path.insert( 0, os.path.join(ROOT_PATH, 'apps'))
+sys.path.insert(0, os.path.join( os.path.dirname(__file__), '../libraries/' ) )
 
 from project_options import ProjectOptions
 from trade_application import TradeApplication
