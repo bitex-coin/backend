@@ -28,12 +28,12 @@ def main():
     parser.print_help()
     return
 
+  config_file = "/code/bitex.ini"
+  if not os.path.exists( config_file ):
+      raise RuntimeError("Configuration file not found")
 
-  candidates = [ os.path.join(site_config_dir('bitex'), 'bitex.ini'),
-                 os.path.expanduser('~/.bitex/bitex.ini'),
-                 arguments.config]
   config = ConfigParser.SafeConfigParser()
-  config.read( candidates )
+  config.read( config_file )
 
   options = ProjectOptions(config, arguments.instance)
 

@@ -628,7 +628,7 @@ class WebSocketGatewayApplication(tornado.web.Application):
             response = urlopen("https://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv")
             self.tor_ip_list_ = set(response.read().splitlines())
             #self.tor_ip_list_.add('127.0.0.1')
-            self.log('INFO', 'TOR_LIST', str(self.tor_ip_list_))
+            self.log('DEBUG', 'TOR_LIST', str(self.tor_ip_list_))
         except:
             pass
 
@@ -693,11 +693,12 @@ def main():
       parser.print_help()
       return
 
-    candidates = [ os.path.join(site_config_dir('bitex'), 'bitex.ini'),
-                   os.path.expanduser('~/.bitex/bitex.ini'),
-                   arguments.config]
+    config_file = "/code/bitex.ini"
+    if not os.path.exists( config_file ):
+      raise RuntimeError("Configuration file not found")
+
     config = ConfigParser.SafeConfigParser()
-    config.read( candidates )
+    config.read( config_file )
 
     options = ProjectOptions(config, arguments.instance)
 
