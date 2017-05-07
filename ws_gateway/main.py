@@ -628,7 +628,7 @@ class WebSocketGatewayApplication(tornado.web.Application):
             response = urlopen("https://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv")
             self.tor_ip_list_ = set(response.read().splitlines())
             #self.tor_ip_list_.add('127.0.0.1')
-            self.log('DEBUG', 'TOR_LIST', str(self.tor_ip_list_))
+            #self.log('DEBUG', 'TOR_LIST', str(self.tor_ip_list_))
         except:
             pass
 
