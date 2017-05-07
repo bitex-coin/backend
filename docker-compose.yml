@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+        match:
+                build:
+                        context: .
+                        dockerfile: match/Dockerfile
+                volumes: 
+                        - /opt/bitex:/opt/bitex
+        ws_gw:
+                build:
+                        context: .
+                        dockerfile: ws_gateway/Dockerfile
+                volumes: 
+                        - /opt/bitex:/opt/bitex
+        nginx:
+                restart: always
+                build: ./nginx
+                ports:
+                        - "80:80"
+
