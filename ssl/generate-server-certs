@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /opt/bitex/ssl
+openssl genrsa -des3 -passout pass:1234 -out server.pass.key 1024
+openssl rsa -passin pass:1234 -in server.pass.key -out server.key
+rm server.pass.key
+openssl req -new -key server.key -out server.csr \
+	-subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=Bitex/OU=devel/CN=bitex"
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
