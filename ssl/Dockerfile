@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk --update add bash openssl
+RUN apk --update add bash openssl && mkdir -p /opt/bitex/ssl
 
 WORKDIR /opt/bitex/ssl
 
