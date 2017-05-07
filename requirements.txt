@@ -1,0 +1,13 @@
+appdirs==1.4.3
+backports-abc==0.5
+certifi==2017.4.17
+packaging==16.8
+pycountry==17.1.8
+pyotp==2.2.4
+pyparsing==2.2.0
+pyzmq==16.0.2
+singledispatch==3.4.0.3
+six==1.10.0
+SQLAlchemy==1.1.9
+tornado==4.5.1
+zmq==0.0.0
