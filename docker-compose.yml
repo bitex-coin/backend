@@ -13,9 +13,27 @@ services:
                         dockerfile: ws_gateway/Dockerfile
                 volumes: 
                         - /opt/bitex:/opt/bitex
+
+        frontend:
+                build: ./frontend
+                command: echo "Compile-only container"
+                volumes: 
+                        - /opt/bitex/static:/opt/bitex/static
+
+        ssl:
+                build:
+                        context: .
+                        dockerfile: ssl/Dockerfile
+                volumes: 
+                        - /opt/bitex:/opt/bitex
+
         nginx:
                 restart: always
                 build: ./nginx
+                volumes: 
+                        - /opt/bitex:/opt/bitex
+                depends_on:
+                        - ssl
                 ports:
                         - "80:80"
-
+                        - "443:443"
