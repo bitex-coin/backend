@@ -1,0 +1,7 @@
+#!/bin/bash
+mkdir -p /opt/bitex/static 
+
+cd frontend 
+git pull origin master
+jekyll build --incremental --destination=/opt/bitex/static
+
