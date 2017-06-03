@@ -11,10 +11,10 @@ class InstrumentStatusHelper(object):
     def __init__(self, symbol = "ALL"):
         self.symbol = str(symbol)
         self.last_trades = []
-        self.volume_price = 0
-        self.volume_size = 0
-        self.last_price = 0
-        self.max_price = 0
+        self.volume_price = 1
+        self.volume_size = 1
+        self.last_price = 1
+        self.max_price = 1
         self.min_price = None
         self.bid = None
         self.ask = None
