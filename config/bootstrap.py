@@ -25,7 +25,7 @@ def main():
   options.define('db_echo', True)
 
 
-  from trade.models import engine, Currency, Instrument, User, Broker, DepositMethods
+  from match.models import engine, Currency, Instrument, User, Broker, DepositMethods
   session = scoped_session(sessionmaker(bind=engine))
 
   for section_name in config.sections():
