@@ -228,7 +228,7 @@ def processLogin(session, msg):
     'WithdrawPercentFee' : session.user.withdraw_percent_fee,
     'WithdrawFixedFee'   : session.user.withdraw_fixed_fee,
     'IsMarketMaker'      : session.user.is_market_maker,
-    'Broker'             : broker_info
+    'Broker'             : broker_info,
     'Profile': getProfileMessage(session.user, session.profile, session.has_access_to_account_info())
   }
   return json.dumps(login_response, cls=JsonEncoder)
