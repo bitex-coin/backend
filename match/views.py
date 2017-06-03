@@ -182,24 +182,9 @@ def processLogin(session, msg):
   TradeApplication.instance().db_session.add(session.user)
   TradeApplication.instance().db_session.commit()
 
-  # Send the login response
-  login_response = {
-    'MsgType'            : 'BF',
-    'UserReqID'          : msg.get('UserReqID'),
-    'UserID'             : session.user.id,
-    'Username'           : session.user.username if session.has_access_to_account_info() else 'hidden',
-    'TwoFactorEnabled'   : session.user.two_factor_enabled,
-    'UserStatus'         : 1,
-    'IsBroker'           : session.user.is_broker,
-    'BrokerID'           : session.broker.id,
-    'TransactionFeeBuy'  : session.user.transaction_fee_buy,
-    'TransactionFeeSell' : session.user.transaction_fee_sell,
-    'DepositPercentFee'  : session.user.deposit_percent_fee ,
-    'DepositFixedFee'    : session.user.deposit_fixed_fee,
-    'WithdrawPercentFee' : session.user.withdraw_percent_fee,
-    'WithdrawFixedFee'   : session.user.withdraw_fixed_fee,
-    'IsMarketMaker'      : session.user.is_market_maker,
-    'Broker': {
+  broker_info = {}
+  if session.broker:
+    broker_info = {
         'BrokerID'           : session.broker.id                   ,
         'ShortName'          : session.broker.short_name           ,
         'BusinessName'       : session.broker.business_name        ,
@@ -224,7 +209,26 @@ def processLogin(session, msg):
         'ranking'            : session.broker.ranking              ,
         'SupportURL'         : session.broker.support_url          ,
         'CryptoCurrencies'   : json.loads(session.broker.crypto_currencies)
-    },
+    }
+
+  # Send the login response
+  login_response = {
+    'MsgType'            : 'BF',
+    'UserReqID'          : msg.get('UserReqID'),
+    'UserID'             : session.user.id,
+    'Username'           : session.user.username if session.has_access_to_account_info() else 'hidden',
+    'TwoFactorEnabled'   : session.user.two_factor_enabled,
+    'UserStatus'         : 1,
+    'IsBroker'           : session.user.is_broker,
+    'BrokerID'           : session.broker.id if session.broker else 0,
+    'TransactionFeeBuy'  : session.user.transaction_fee_buy,
+    'TransactionFeeSell' : session.user.transaction_fee_sell,
+    'DepositPercentFee'  : session.user.deposit_percent_fee ,
+    'DepositFixedFee'    : session.user.deposit_fixed_fee,
+    'WithdrawPercentFee' : session.user.withdraw_percent_fee,
+    'WithdrawFixedFee'   : session.user.withdraw_fixed_fee,
+    'IsMarketMaker'      : session.user.is_market_maker,
+    'Broker'             : broker_info
     'Profile': getProfileMessage(session.user, session.profile, session.has_access_to_account_info())
   }
   return json.dumps(login_response, cls=JsonEncoder)

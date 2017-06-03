@@ -44,7 +44,8 @@ class Session(object):
 
     if user.broker_id is not None:
       self.broker           = Broker.get_broker( TradeApplication.instance().db_session,user.broker_id)
-      self.broker_accounts  = json.loads(self.broker.accounts)
+      if self.broker is not None:
+            self.broker_accounts  = json.loads(self.broker.accounts)
 
 
   def has_access_to_account_info(self):
