@@ -59,7 +59,8 @@ def main():
 
         e = Instrument(symbol=currency_description[0],
                        currency=currency_description[1],
-                       description=currency_description[2])
+                       description=currency_description[2],
+                       market=currency_description[3])
         session.add(e)
         session.commit()
 

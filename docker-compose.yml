@@ -29,13 +29,6 @@ services:
                 volumes: 
                         - /opt/bitex/static:/opt/bitex/static
 
-        ssl:
-                build:
-                        context: .
-                        dockerfile: ssl/Dockerfile
-                volumes: 
-                        - /opt/bitex/ssl:/opt/bitex/ssl
-
         nginx:
                 restart: always
                 build: ./nginx
@@ -43,7 +36,6 @@ services:
                         - /opt/bitex/static:/opt/bitex/static
                         - /opt/bitex/ssl:/opt/bitex/ssl
                 depends_on:
-                        - ssl
                         - ws_gw
                 ports:
                         - "80:80"

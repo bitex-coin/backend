@@ -31,7 +31,7 @@ import pyotp
 
 def get_datetime_now(timezone=None):
   #this is just a workaround, so we can test datetime.datetime.now()
-  from trade import get_now
+  from match import get_now
   return get_now(timezone)
 
 class AlchemyJSONEncoder(json.JSONEncoder):
