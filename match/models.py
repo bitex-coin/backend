@@ -30,9 +30,8 @@ import pyotp
 
 
 def get_datetime_now(timezone=None):
-  #this is just a workaround, so we can test datetime.datetime.now()
-  from match import get_now
-  return get_now(timezone)
+  import datetime
+  return datetime.datetime.now(timezone)
 
 class AlchemyJSONEncoder(json.JSONEncoder):
   def default(self, obj):

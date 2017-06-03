@@ -15,9 +15,9 @@ class InstrumentStatusHelper(object):
         self.volume_size = 1
         self.last_price = 1
         self.max_price = 1
-        self.min_price = None
-        self.bid = None
-        self.ask = None
+        self.min_price = 1
+        self.bid = 1
+        self.ask = 1
         self.timestamp_last_update = int(time.time() * 1000)
 
     def set_best_bid(self, bid ):

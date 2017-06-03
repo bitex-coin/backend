@@ -419,12 +419,13 @@ def generate_trade_history(session, page_size = None, offset = None, sort_column
     return trade_list
 
 
-def generate_security_status(symbol, req_id, application):
+def generate_security_status(market, symbol, req_id, application):
     md_subscriber = MarketDataSubscriber.get(symbol, application)
 
     ss = {
         "MsgType": "f",
         "SecurityStatusReqID": req_id,
+        "Market": market,
         "Symbol": symbol,
         "HighPx": md_subscriber.inst_status.max_price,
         "LowPx": md_subscriber.inst_status.min_price,

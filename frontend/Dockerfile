@@ -12,3 +12,4 @@ RUN chmod +x /usr/local/bin/entrypoint
 
 CMD /usr/local/bin/entrypoint
 
+

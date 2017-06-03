@@ -387,8 +387,12 @@ class WebSocketHandler(websocket.WebSocketHandler):
             if req_id not in self.sec_status_subscriptions:
                 self.sec_status_subscriptions[req_id] = []
 
-        for instrument in instruments:
+        for x in instruments:
+            y = x.split(':')
+            market = y[0]
+            instrument = y[1]
             ss = generate_security_status(
+                market,
                 instrument,
                 req_id,
                 self.application)
