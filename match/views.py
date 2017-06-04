@@ -182,7 +182,7 @@ def processLogin(session, msg):
   TradeApplication.instance().db_session.add(session.user)
   TradeApplication.instance().db_session.commit()
 
-  broker_info = {}
+  broker_info = None
   if session.broker:
     broker_info = {
         'BrokerID'           : session.broker.id                   ,
