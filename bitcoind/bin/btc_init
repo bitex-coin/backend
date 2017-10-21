@@ -17,8 +17,8 @@ printtoconsole=${PRINTTOCONSOLE:-1}
 rpcuser=${RPCUSER:-bitcoinrpc}
 rpcpassword=${RPCPASSWORD:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base64`}
 
-walletnotify=/opt/bitex/apps/api_receive/walletnotify.sh %s
-blocknotify=/opt/bitex/apps/api_receive/blocknotify.sh %s
+walletnotify=/usr/local/bin/walletnotify.sh %s
+blocknotify=/usr/local/bin/blocknotify.sh %s
 
 paytxfee=${DISABLEWALLET:-0.0001}
 
