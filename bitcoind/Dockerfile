@@ -40,7 +40,7 @@ RUN set -x \
 		wget \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD ./bin /usr/local/bin
+ADD ./bitcoind/bin /usr/local/bin
 
 VOLUME ["/bitcoin"]
 
@@ -48,7 +48,8 @@ EXPOSE 8332 8333 18332 18333
 
 WORKDIR /bitcoin
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY ./bitcoind/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["btc_oneshot"]
+

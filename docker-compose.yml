@@ -1,42 +1,57 @@
 version: '2'
 
 services:
-        match:
-                build:
-                        context: .
-                        dockerfile: match/Dockerfile
-                volumes: 
-                        - /opt/bitex:/opt/bitex
-                        - /opt/bitex/db:/opt/bitex/db
-                        - /opt/bitex/logs:/opt/bitex/logs
-                depends_on:
-                        - frontend
-        ws_gw:
-                build:
-                        context: .
-                        dockerfile: ws_gateway/Dockerfile
-                volumes: 
-                        - /opt/bitex:/opt/bitex
-                ports:
-                        - "8445:8445"
-                depends_on:
-                        - match
+    frontend:
+        build:
+            context: .
+            dockerfile: frontend/Dockerfile
+        volumes: 
+            - bitex-data:/opt/bitex
 
-        frontend:
-                build:
-                        context: .
-                        dockerfile: frontend/Dockerfile
-                volumes: 
-                        - /opt/bitex/static:/opt/bitex/static
+    match:
+        build:
+            context: .
+            dockerfile: match/Dockerfile
+        volumes: 
+            - bitex-data:/opt/bitex
 
-        nginx:
-                restart: always
-                build: ./nginx
-                volumes: 
-                        - /opt/bitex/static:/opt/bitex/static
-                        - /opt/bitex/ssl:/opt/bitex/ssl
-                depends_on:
-                        - ws_gw
-                ports:
-                        - "80:80"
-                        - "443:443"
+        depends_on:
+            - frontend
+    ws_gw:
+        build:
+            context: .
+            dockerfile: ws_gateway/Dockerfile
+        volumes: 
+            - bitex-data:/opt/bitex
+        ports:
+            - "8445:8445"
+        depends_on:
+            - match
+
+    nginx:
+        restart: always
+        build: ./nginx
+        volumes: 
+            - bitex-data:/opt/bitex
+        depends_on:
+            - ws_gw
+        ports:
+            - "80:80"
+            - "443:443"
+    bitcoind:
+        build:
+            context: .
+            dockerfile: bitcoind/Dockerfile
+        depends_on:
+            - nginx
+        volumes: 
+            - bitcoind-data:/bitcoin
+        ports:
+            - "8332:8332"
+            - "8333:8333"
+            - "18332:18332"
+            - "18333:18333"
+
+volumes:
+    bitcoind-data:
+    bitex-data:
