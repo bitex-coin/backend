@@ -3,12 +3,10 @@
 ## Joining the blockchain
 
  1. Install [Docker](https://www.docker.com/)
- 2. Install [Terraform](https://www.terraform.io/)
- 3. `cd terraform/demo`
- 4. (Mac only) Change `volume_path` to your docker persistent folder
- 5. `terraform get`
- 6. `terraform apply`
- 7. Type a name for your node.
+ 2. Install [Docker-Compose](https://docs.docker.com/compose/)
+ 3. `docker-compose up`
+ 4. tun run as deamon
+ 5. `docker-compose up -d`
 
 Setup will spin of next services:
 - http://localhost:8080/  -- Demo Exchange
