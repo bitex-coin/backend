@@ -52,4 +52,3 @@ COPY ./bitcoind/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["btc_oneshot"]
-

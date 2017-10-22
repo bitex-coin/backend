@@ -1,22 +1,12 @@
 version: '2'
 
 services:
-    frontend:
-        build:
-            context: .
-            dockerfile: frontend/Dockerfile
-        volumes: 
-            - bitex-data:/opt/bitex
-
     match:
         build:
             context: .
             dockerfile: match/Dockerfile
         volumes: 
             - bitex-data:/opt/bitex
-
-        depends_on:
-            - frontend
     ws_gw:
         build:
             context: .
@@ -29,7 +19,6 @@ services:
             - match
 
     nginx:
-        restart: always
         build: ./nginx
         volumes: 
             - bitex-data:/opt/bitex
@@ -51,6 +40,10 @@ services:
             - "8333:8333"
             - "18332:18332"
             - "18333:18333"
+        environment: 
+            - TESTNET=1
+            - DISABLEWALLET=0
+            - PRINTTOCONSOLE=0
 
 volumes:
     bitcoind-data:

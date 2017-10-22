@@ -20,7 +20,7 @@ rpcpassword=${RPCPASSWORD:-`dd if=/dev/urandom bs=33 count=1 2>/dev/null | base6
 walletnotify=/usr/local/bin/walletnotify.sh %s
 blocknotify=/usr/local/bin/blocknotify.sh %s
 
-paytxfee=${DISABLEWALLET:-0.0001}
+paytxfee=${PAYTXFEE:-0.0001}
 
 EOF
 

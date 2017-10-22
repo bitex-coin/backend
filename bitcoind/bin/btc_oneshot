@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -ex
 
@@ -12,3 +12,4 @@ else
 fi
 
 exec bitcoind "${args[@]}"
+
