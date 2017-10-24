@@ -23,7 +23,7 @@ class BlockNotifyHandler(tornado.web.RequestHandler):
         should_commit = True
 
         self.application.invoke_callback_url(unconfirmed_forwarding_address)
-      except Exception,e:
+      except Exception as e:
         self.application.log('ERROR', str(e))
     if should_commit:
       self.application.db_session.commit()

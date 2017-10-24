@@ -62,7 +62,7 @@ class WalletNotifyHandler(tornado.web.RequestHandler):
           for payee_address in decoded_input_raw_tx['vout'][ input['vout'] ]['scriptPubKey']['addresses']:
             if payee_address not in payee_addresses:
               payee_addresses.append(payee_address)
-      except Exception, e :
+      except Exception:
         pass
 
       total_output_value = decimal.Decimal(0)
@@ -99,8 +99,8 @@ class WalletNotifyHandler(tornado.web.RequestHandler):
           [{"txid" : txid, "vout" : vout_index}],
           { destination_address: float(fwd_value) }
         )
-      except Exception,e:
-        print str(e)
+      except Exception as e:
+        print(str(e))
         raise
 
       signed_fwd_raw_transaction = self.application.bitcoind.signrawtransaction (fwd_raw_transaction,[{

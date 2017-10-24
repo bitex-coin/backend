@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 import os
+import sys
 import argparse
-import ConfigParser
+import configparser
 from appdirs import site_config_dir
-from pyblinktrade.project_options import ProjectOptions
+
+sys.path.insert(0, os.path.join( os.path.dirname(__file__), '../libraries/' ) )
+
+from project_options import ProjectOptions
 
 import tornado
 
 from api_receive_application import ApiReceiveApplication
+
 
 def main():
   parser = argparse.ArgumentParser(description="Bitex Api Receive application")
@@ -24,7 +29,7 @@ def main():
 
   candidates = [ os.path.join(site_config_dir('bitex'), 'api_receive.ini'),
                  arguments.config ]
-  config = ConfigParser.SafeConfigParser()
+  config = configparser.SafeConfigParser()
   config.read( candidates )
 
   # Validate the whole file

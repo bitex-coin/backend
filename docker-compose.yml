@@ -18,6 +18,7 @@ services:
         depends_on:
             - match
 
+
     nginx:
         build: ./nginx
         volumes: 
@@ -43,7 +44,16 @@ services:
         environment: 
             - TESTNET=1
             - DISABLEWALLET=0
-            - PRINTTOCONSOLE=0
+            - PRINTTOCONSOLE=1
+
+    receiver:
+        build:
+            context: .
+            dockerfile: receiver/Dockerfile
+        volumes: 
+            - bitex-data:/opt/bitex
+        depends_on:
+            - bitcoind
 
 volumes:
     bitcoind-data:

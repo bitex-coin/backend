@@ -90,13 +90,13 @@ class ApiReceiveApplication(tornado.web.Application):
     if value:
       try:
         log_msg += ',' + value
-      except Exception,e :
+      except Exception as e :
         try:
           log_msg += ',' + str(value)
-        except Exception,e :
+        except Exception as e :
           try:
             log_msg += ',' + unicode(value)
-          except Exception,e :
+          except Exception as e :
             log_msg += ', [object]'
 
 
