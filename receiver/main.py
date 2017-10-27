@@ -11,7 +11,7 @@ from project_options import ProjectOptions
 
 import tornado
 
-from api_receive_application import ApiReceiveApplication
+from .api_receive_application import ApiReceiveApplication
 
 
 def main():

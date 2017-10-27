@@ -9,7 +9,7 @@ class WalletNotifyHandler(tornado.web.RequestHandler):
 
     miners_fee = self.application.paytxfee
 
-    from models import ForwardingAddress
+    from .models import ForwardingAddress
     transaction = self.application.bitcoind.gettransaction(txid)
 
     if transaction is None:
@@ -100,7 +100,7 @@ class WalletNotifyHandler(tornado.web.RequestHandler):
           { destination_address: float(fwd_value) }
         )
       except Exception as e:
-        print(str(e))
+        print((str(e)))
         raise
 
       signed_fwd_raw_transaction = self.application.bitcoind.signrawtransaction (fwd_raw_transaction,[{

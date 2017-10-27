@@ -57,9 +57,9 @@ class ForwardingAddress(Base):
   def get_unconfirmed_by_client(session):
     return session.query(ForwardingAddress).filter_by(is_confirmed_by_client=False).filter(ForwardingAddress.status > 0)
 
-  def get_callback_url(self):
-    from urlparse import urlparse, ParseResult
-    import urllib
+  def get_callback_ul(self):
+    from urllib.parse import urlparse, ParseResult
+    import urllib.request, urllib.parse, urllib.error
 
     callback_url_parse = urlparse(self.callback)
     query_args = {
@@ -75,9 +75,9 @@ class ForwardingAddress(Base):
     }
 
     if not callback_url_parse.query:
-      url_query = urllib.urlencode(query_args)
+      url_query = urllib.parse.urlencode(query_args)
     else:
-      url_query = callback_url_parse.query + '&' + urllib.urlencode(query_args)
+      url_query = callback_url_parse.query + '&' + urllib.parse.urlencode(query_args)
 
     callback_url = ParseResult(scheme=callback_url_parse.scheme ,
                                netloc=callback_url_parse.netloc,
