@@ -6,55 +6,77 @@ services:
             context: .
             dockerfile: match/Dockerfile
         volumes: 
-            - bitex-data:/opt/bitex
+            - /opt/bitex:/opt/bitex
+        networks:
+            vpcbr:
+              ipv4_address: 10.5.0.10
+
     ws_gw:
         build:
             context: .
             dockerfile: ws_gateway/Dockerfile
         volumes: 
-            - bitex-data:/opt/bitex
+            - /opt/bitex:/opt/bitex
         ports:
-            - "8445:8445"
+            - 8445:8445
+        networks:
+            vpcbr:
+              ipv4_address: 10.5.0.20
         depends_on:
             - match
 
+    api_rcv:
+        build:
+            context: .
+            dockerfile: receiver/Dockerfile
+        volumes: 
+            - /opt/bitex:/opt/bitex
+        ports:
+            - 9943:9943
+        networks:
+            vpcbr:
+              ipv4_address: 10.5.0.30
+        depends_on:
+            - bitcoind
+            - match
 
     nginx:
         build: ./nginx
         volumes: 
-            - bitex-data:/opt/bitex
-        depends_on:
-            - ws_gw
+            - /opt/bitex:/opt/bitex
         ports:
-            - "80:80"
-            - "443:443"
+            - 80:80
+            - 443:443
+        networks:
+            vpcbr:
+              ipv4_address: 10.5.0.40
+
     bitcoind:
         build:
             context: .
             dockerfile: bitcoind/Dockerfile
         depends_on:
-            - nginx
+            - match
         volumes: 
-            - bitcoind-data:/bitcoin
+            - /mnt/bitcoind:/bitcoin
         ports:
-            - "8332:8332"
-            - "8333:8333"
-            - "18332:18332"
-            - "18333:18333"
+            - 8333:8333
+            - 127.0.0.1:8332:8332
+            - 18333:18333
+            - 127.0.0.1:18332:18332
+
         environment: 
             - TESTNET=1
             - DISABLEWALLET=0
-            - PRINTTOCONSOLE=1
+            - PRINTTOCONSOLE=0
+        networks:
+            vpcbr:
+              ipv4_address: 10.5.0.50
 
-    receiver:
-        build:
-            context: .
-            dockerfile: receiver/Dockerfile
-        volumes: 
-            - bitex-data:/opt/bitex
-        depends_on:
-            - bitcoind
-
-volumes:
-    bitcoind-data:
-    bitex-data:
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1

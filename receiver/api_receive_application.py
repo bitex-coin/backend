@@ -11,11 +11,11 @@ from functools import partial
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from .create_receive_handler import ReceiveHandler
-from .wallet_notify_handler import  WalletNotifyHandler
-from .block_notify_handler import BlockNotifyHandler
+from create_receive_handler import ReceiveHandler
+from wallet_notify_handler import  WalletNotifyHandler
+from block_notify_handler import BlockNotifyHandler
 
-from .authproxy import AuthServiceProxy
+from authproxy import AuthServiceProxy
 
 class ApiReceiveApplication(tornado.web.Application):
   def __init__(self, options, instance_name):
@@ -50,7 +50,7 @@ class ApiReceiveApplication(tornado.web.Application):
     self.replay_logger.addHandler(ch)
 
 
-    from .models import Base, db_bootstrap
+    from models import Base, db_bootstrap
     engine = create_engine( self.options.db_engine, echo=self.options.db_echo)
     Base.metadata.create_all(engine)
     self.db_session = scoped_session(sessionmaker(bind=engine))
@@ -67,7 +67,7 @@ class ApiReceiveApplication(tornado.web.Application):
 
 
   def on_handle_callback_url(self, forwarding_address_id, response ):
-    from .models import ForwardingAddress
+    from models import ForwardingAddress
     forwarding_address = ForwardingAddress.get_by_id(self.db_session, forwarding_address_id)
 
     if response.error:
@@ -112,7 +112,7 @@ class ApiReceiveApplication(tornado.web.Application):
     self.log('PARAM','rpc_url'               ,self.options.rpc_url)
     self.log('PARAM','END')
 
-    from .models import ForwardingAddress
+    from models import ForwardingAddress
     fwd_address_list = self.db_session.query(ForwardingAddress)
     for fwd_address in fwd_address_list:
       self.log('DB_ENTITY', 'FORWARDING_ADDRESS', fwd_address)
