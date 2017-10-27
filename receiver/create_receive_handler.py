@@ -19,7 +19,7 @@ class ReceiveHandler(tornado.web.RequestHandler):
 
     input_address = self.application.bitcoind.getnewaddress('')
 
-    from models import ForwardingAddress
+    from .models import ForwardingAddress
     self.application.log('CREATE', 'FORWARDING_ADDRESS', ",".join([address, input_address, callback]) )
     ForwardingAddress.create(self.application.db_session, address, input_address, callback)
 

@@ -7,7 +7,7 @@ from functools import partial
 class BlockNotifyHandler(tornado.web.RequestHandler):
   def get(self, hash):
     self.application.log('HTTP_GET', '/api/blocknotify/' + hash )
-    from models import ForwardingAddress
+    from .models import ForwardingAddress
 
     unconfirmed_forwarding_addresses = ForwardingAddress.get_unconfirmed_by_client(self.application.db_session)
 
